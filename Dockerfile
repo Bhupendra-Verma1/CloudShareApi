@@ -3,11 +3,19 @@ FROM eclipse-temurin:21-jdk AS build
 
 WORKDIR /app
 
+# Copy Maven Wrapper and config
+COPY mvnw .
+COPY .mvn .mvn
+
+# Copy project files
 COPY pom.xml .
 COPY src ./src
 
-RUN ./mvnw -version || true
-RUN mvn -q -e -DskipTests clean package
+# Make sure mvnw is executable
+RUN chmod +x mvnw
+
+# Build using Maven Wrapper
+RUN ./mvnw -q -e -DskipTests clean package
 
 # ---------- Runtime Stage ----------
 FROM eclipse-temurin:21-jre
