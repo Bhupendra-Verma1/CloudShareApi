@@ -11,6 +11,12 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
 
+      # File Size
+      - key: MAX_FILE_SIZE
+        sync: false
+      - key: MAX_REQUEST_SIZE
+        sync: false
+
       # MongoDB
       - key: MONGODB_URI
         sync: false
