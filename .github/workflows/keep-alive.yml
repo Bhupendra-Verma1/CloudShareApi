@@ -1,0 +1,17 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    # Every 5 minutes (safe margin under Render’s 15-minute idle timeout)
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call health endpoint
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            -H "X-Health-Token: ${{ secrets.HEALTH_CHECK_SECRET }}" \
+            https://cloudshareapi-n9zo.onrender.com/api/v1.0/healthz
