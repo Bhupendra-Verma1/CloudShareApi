@@ -65,7 +65,7 @@ public class FileMetadataService {
 
     public List<FileMetadataDTO> getFiles() {
         ProfileDocument existingProfile = profileService.getCurrentProfile();
-        return fileMetadataRepository.findByClerkId(existingProfile.getClerkId())
+        return fileMetadataRepository.findByClerkIdOrderByUploadedAtDesc(existingProfile.getClerkId())
                 .stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
